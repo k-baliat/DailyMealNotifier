@@ -19,19 +19,19 @@ def check_bot_status():
     except requests.exceptions.RequestException:
         return False
 
-def get_real_chat_id(max_retries=3, retry_delay=5):
+def get_all_chat_ids(max_retries=3, retry_delay=5):
     """
-    Get the chat ID from the most recent message to the bot.
+    Get all unique chat IDs that have interacted with the bot.
     
     Args:
         max_retries (int): Maximum number of retry attempts
         retry_delay (int): Delay between retries in seconds
     
     Returns:
-        int: The chat ID
+        set: A set of unique chat IDs
     
     Raises:
-        Exception: If no chat ID is found after all retries
+        Exception: If no chat IDs are found after all retries
     """
     if not check_bot_status():
         raise Exception("❌ Bot is not active. Please check your bot token and internet connection.")
@@ -43,8 +43,15 @@ def get_real_chat_id(max_retries=3, retry_delay=5):
         try:
             response = requests.get(url).json()
             if response.get("ok") and response.get("result"):
-                return response["result"][-1]["message"]["chat"]["id"]
-            
+                # Extract all unique chat IDs from the updates
+                chat_ids = set()
+                for update in response["result"]:
+                    if "message" in update and "chat" in update["message"]:
+                        chat_ids.add(update["message"]["chat"]["id"])
+                
+                if chat_ids:
+                    return chat_ids
+                
             if attempt < max_retries - 1:
                 print(f"[APP]\t No messages found. Retrying in {retry_delay} seconds... (Attempt {attempt + 1}/{max_retries})")
                 time.sleep(retry_delay)
@@ -53,20 +60,37 @@ def get_real_chat_id(max_retries=3, retry_delay=5):
                 print(f"[APP]\t Error occurred: {str(e)}. Retrying in {retry_delay} seconds... (Attempt {attempt + 1}/{max_retries})")
                 time.sleep(retry_delay)
             else:
-                raise Exception(f"❌ Failed to get chat ID after {max_retries} attempts. Please send a message to your bot and try again.")
+                raise Exception(f"❌ Failed to get chat IDs after {max_retries} attempts. Please send a message to your bot and try again.")
     
-    raise Exception("❌ No chat ID found. Please send a message to your bot and try again.")
-
+    raise Exception("❌ No chat IDs found. Please send a message to your bot and try again.")
 
 def send_telegram_message(message):
+    """
+    Send a message to all users who have interacted with the bot.
+    
+    Args:
+        message (str): The message to send
+    
+    Returns:
+        list: List of responses from the Telegram API
+    """
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    chat_id = get_real_chat_id()
-    print(f'[APP]\t Chat ID: {chat_id}')
-    data = {
-        "chat_id": chat_id,
-        "text": message
-    }
-    response = requests.post(url, data=data)
-    print("[APP]\t ✅Successfully Sent Notification to the BOT!")
-    return response.json()
+    # chat_ids = get_all_chat_ids()
+    chat_ids = {-4781253319} #GroupChat ID
+    
+    responses = []
+    for chat_id in chat_ids:
+        print(f'[APP]\t Sending message to Chat ID: {chat_id}')
+        data = {
+            "chat_id": chat_id,
+            "text": message
+        }
+        try:
+            response = requests.post(url, data=data)
+            responses.append(response.json())
+            print(f"[APP]\t ✅ Successfully sent notification to chat ID {chat_id}")
+        except requests.exceptions.RequestException as e:
+            print(f"[APP]\t ❌ Failed to send message to chat ID {chat_id}: {str(e)}")
+    
+    return responses
