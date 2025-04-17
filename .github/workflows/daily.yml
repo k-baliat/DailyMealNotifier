@@ -11,6 +11,7 @@ jobs:
     env:
       FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_GROUP_ID: ${{secrets.TELEGRAM_GROUP_ID}}
 
     steps:
       - name: Start Cron
