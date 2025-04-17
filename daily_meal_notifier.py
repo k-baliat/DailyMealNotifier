@@ -124,6 +124,7 @@ def send_daily_meal():
     """
     try:
         message = get_today_meal()
+        print(f'[INFO]\t{message}')
         send_telegram_message(message)
         logging.info("Successfully sent daily meal notification")
     except Exception as e:
