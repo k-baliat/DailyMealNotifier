@@ -2,7 +2,7 @@ name: Daily Meal Notifier
 
 on:
   schedule:
-   - cron: "00 20 * * *"   # Runs daily at 12:00 PM PST (03:45 UTC)
+   - cron: "00 19 * * *"   # Runs daily at 12:00 PM PST (03:45 UTC)
   workflow_dispatch:       # Allows manual triggering via GitHub UI
 
 jobs:
