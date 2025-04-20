@@ -77,20 +77,20 @@ def send_telegram_message(message):
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     # chat_ids = get_all_chat_ids()
-    chat_ids = os.getenv("TELEGRAM_GROUP_ID") #GroupChat ID
+    chat_id = os.getenv("TELEGRAM_GROUP_ID") #GroupChat ID
     
     responses = []
-    for chat_id in chat_ids:
-        print(f'[APP]\t Sending message to Chat ID: {chat_id}')
-        data = {
-            "chat_id": chat_id,
-            "text": message
-        }
-        try:
-            response = requests.post(url, data=data)
-            responses.append(response.json())
-            print(f"[APP]\t ✅ Successfully sent notification to chat ID {chat_id}")
-        except requests.exceptions.RequestException as e:
-            print(f"[APP]\t ❌ Failed to send message to chat ID {chat_id}: {str(e)}")
+    # for chat_id in chat_ids:
+    print(f'[APP]\t Sending message to Chat ID: {chat_id}')
+    data = {
+        "chat_id": chat_id,
+        "text": message
+    }
+    try:
+        response = requests.post(url, data=data)
+        responses.append(response.json())
+        print(f"[APP]\t ✅ Successfully sent notification to chat ID {chat_id}")
+    except requests.exceptions.RequestException as e:
+        print(f"[APP]\t ❌ Failed to send message to chat ID {chat_id}: {str(e)}")
     
     return responses
