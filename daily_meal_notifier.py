@@ -82,7 +82,7 @@ def get_today_meal():
         meal_plan_ref = db.collection('mealPlans').document(week_range)
         meal_plan = meal_plan_ref.get()
         
-        if not meal_plan.exists:
+        if not meal_plan.exists :
             logging.info(f"No meal plan found for {week_range}")
             noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a dad joke to brighten your day!\n\n"
             noMealMessage += get_dad_joke()
@@ -94,7 +94,10 @@ def get_today_meal():
         
         if not recipe_ids or recipe_ids[0] == '':
             logging.info(f"No meal planned for {day_of_week}, {date_str}")
-            return f"No meal planned for {day_of_week}, {date_str}"
+            noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a dad joke to brighten your day!\n\n"
+            noMealMessage += get_dad_joke()
+
+            return noMealMessage
             
         # Get recipe details
         message = f"🍽️ Today's Meal ({day_of_week}, {date_str}):\n\n"
