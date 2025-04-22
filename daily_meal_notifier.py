@@ -13,6 +13,8 @@ from apscheduler.triggers.cron import CronTrigger
 import signal
 import sys
 import time
+import requests
+
 
 # Set up logging
 logging.basicConfig(
@@ -55,6 +57,12 @@ except Exception as e:
     logging.error(f"Failed to initialize Firebase: {str(e)}")
     raise
 
+
+def get_dad_joke():
+    response = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "application/json"})
+    return response.json().get("joke")
+
+
 def get_today_meal():
     """
     Get today's meal information from Firestore
@@ -76,7 +84,10 @@ def get_today_meal():
         
         if not meal_plan.exists:
             logging.info(f"No meal plan found for {week_range}")
-            return f"No meal planned for {day_of_week}, {date_str}"
+            noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a dad joke to brighten your day!\n\n"
+            noMealMessage += get_dad_joke()
+
+            return noMealMessage
             
         meal_data = meal_plan.to_dict()
         recipe_ids = meal_data.get(day_of_week, '').split(',')

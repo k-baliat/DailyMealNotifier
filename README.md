@@ -12,12 +12,12 @@ The Daily Meal Notifier is a Python-based service that automatically sends daily
 ```ascii
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │             │    │             │    │             │     │
-│  │  Firebase   │◄──►│  Python     │◄──►│  Telegram   │     │
-│  │  Firestore  │    │  Service    │    │  Bot API    │     │
-│  │             │    │             │    │             │     │
-│  └─────────────┘    └─────────────┘    └─────────────┘     │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐      │
+│  │             │    │             │    │             │      │
+│  │  Firebase   │◄──►│  Python     │◄──►│  Telegram   │      │
+│  │  Firestore  │    │  Service    │    │  Bot API    │      │
+│  │             │    │             │    │             │      │
+│  └─────────────┘    └─────────────┘    └─────────────┘      │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -29,17 +29,17 @@ The Daily Meal Notifier is a Python-based service that automatically sends daily
 ```ascii
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │  Firebase   │    │  Python     │    │  Telegram   │     │
-│  │  Firestore  │    │  Backend    │    │  Bot API    │     │
-│  └──────┬──────┘    └──────┬──────┘    └──────┬──────┘     │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐      │
+│  │  Firebase   │    │  Python     │    │  Telegram   │      │
+│  │  Firestore  │    │  Backend    │    │  Bot API    │      │
+│  └──────┬──────┘    └──────┬──────┘    └──────┬──────┘      │
 │         │                  │                  │             │
 │         └──────────────────┴──────────────────┘             │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-- **Python Backend**: Built with Python 3.x, utilizing modern async patterns and robust error handling
+- **Python Backend**: Built with Python 3.10, utilizing modern async patterns and robust error handling
 - **Firebase Integration**: Uses Firestore for storing meal plans and recipe data
 - **Telegram API**: Sends notifications through Telegram's bot API
 - **Scheduling**: Implements APScheduler for reliable daily notifications
@@ -50,10 +50,10 @@ The Daily Meal Notifier is a Python-based service that automatically sends daily
 ```ascii
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │  Automated  │    │  Timezone   │    │  Error      │     │
-│  │  Notifications │  │  Aware      │    │  Handling   │     │
-│  └─────────────┘    └─────────────┘    └─────────────┘     │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐      │
+│  │  Automated  │    │  Timezone   │    │  Error      │      │
+│  │Notifications│    │  Aware      │    │  Handling   │      │
+│  └─────────────┘    └─────────────┘    └─────────────┘      │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -69,10 +69,10 @@ The Daily Meal Notifier is a Python-based service that automatically sends daily
 ```ascii
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │  Python     │    │  Firebase   │    │  Telegram   │     │
-│  │  3.x        │    │  Admin      │    │  Bot API    │     │
-│  └─────────────┘    └─────────────┘    └─────────────┘     │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐      │
+│  │  Python     │    │  Firebase   │    │  Telegram   │      │
+│  │  3.10       │    │  Admin      │    │  Bot API    │      │
+│  └─────────────┘    └─────────────┘    └─────────────┘      │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
