@@ -14,6 +14,7 @@ import signal
 import sys
 import time
 import requests
+import random
 
 
 # Set up logging
@@ -62,6 +63,9 @@ def get_dad_joke():
     response = requests.get("https://icanhazdadjoke.com/", headers={"Accept": "application/json"})
     return response.json().get("joke")
 
+def get_useless_fact():
+    response = requests.get("https://uselessfacts.jsph.pl/random.json?language=en", headers={"Accept": "application/json"})
+    return response.json().get("text")
 
 def get_today_meal():
     """
@@ -84,8 +88,10 @@ def get_today_meal():
         
         if not meal_plan.exists :
             logging.info(f"No meal plan found for {week_range}")
-            noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a dad joke to brighten your day!\n\n"
-            noMealMessage += get_dad_joke()
+            noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a something to brighten your day!\n\n"
+            dad_joke = f"Dad Joke 😝\n{get_dad_joke()}" 
+            useless_fact = f"Fun Fact 🤔\n{get_useless_fact}"
+            noMealMessage += random.choice([dad_joke, useless_fact])
 
             return noMealMessage
             
@@ -95,7 +101,10 @@ def get_today_meal():
         if not recipe_ids or recipe_ids[0] == '':
             logging.info(f"No meal planned for {day_of_week}, {date_str}")
             noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a dad joke to brighten your day!\n\n"
-            noMealMessage += get_dad_joke()
+            dad_joke = f"Dad Joke 😝\n{get_dad_joke()}" 
+            useless_fact = f"Fun Fact 🤔\n{get_useless_fact}"
+            noMealMessage += random.choice([dad_joke, useless_fact])
+
 
             return noMealMessage
             
