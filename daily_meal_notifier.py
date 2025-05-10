@@ -129,8 +129,7 @@ def get_week_range(date):
     """
     start_of_week = date - timedelta(days=date.weekday())
     end_of_week = start_of_week + timedelta(days=6)
-    return f"{start_of_week.strftime('%B %d, %Y')} - {end_of_week.strftime('%B %d, %Y')}"
-
+    return f"{start_of_week.strftime('%B')} {start_of_week.day}, {start_of_week.year} - {end_of_week.strftime('%B')} {end_of_week.day}, {end_of_week.year}"
 
 def send_daily_meal():
     """
