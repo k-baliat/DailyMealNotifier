@@ -85,13 +85,14 @@ def get_today_meal():
         # Get meal plan for this week
         meal_plan_ref = db.collection('mealPlans').document(week_range)
         meal_plan = meal_plan_ref.get()
-        
+        useless_fact = f"Fun Fact 🤔\n{get_useless_fact()}"
+        dad_joke = f"Dad Joke 😝\n{get_dad_joke()}" 
+        noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a something to brighten your day!\n\n"
+        noMealMessage += random.choice([dad_joke, useless_fact])
+
         if not meal_plan.exists :
             logging.info(f"No meal plan found for {week_range}")
-            noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a something to brighten your day!\n\n"
-            dad_joke = f"Dad Joke 😝\n{get_dad_joke()}" 
-            useless_fact = f"Fun Fact 🤔\n{get_useless_fact}"
-            noMealMessage += random.choice([dad_joke, useless_fact])
+            noMealMessage
 
             return noMealMessage
             
@@ -100,17 +101,13 @@ def get_today_meal():
         
         if not recipe_ids or recipe_ids[0] == '':
             logging.info(f"No meal planned for {day_of_week}, {date_str}")
-            noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a dad joke to brighten your day!\n\n"
-            dad_joke = f"Dad Joke 😝\n{get_dad_joke()}" 
-            useless_fact = f"Fun Fact 🤔\n{get_useless_fact}"
-            noMealMessage += random.choice([dad_joke, useless_fact])
-
+            noMealMessage
 
             return noMealMessage
             
         # Get recipe details
         message = f"🍽️ Today's Meal ({day_of_week}, {date_str}):\n\n"
-        
+
         for recipe_id in recipe_ids:
             recipe_ref = db.collection('recipes').document(recipe_id)
             recipe = recipe_ref.get()
@@ -122,9 +119,11 @@ def get_today_meal():
                 for ingredient in recipe_data['ingredients']:
                     message += f"• {ingredient}\n"
                 message += "\n"
+
             else:
                 logging.warning(f"Recipe {recipe_id} not found")
-        
+                
+        message += useless_fact
         return message.strip()
     except Exception as e:
         error_msg = f"Error getting meal information: {str(e)}"
