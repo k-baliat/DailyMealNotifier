@@ -36,3 +36,16 @@
 2025-05-12 17:00:09,997 - INFO - Successfully sent daily meal notification
 2025-05-12 17:01:58,403 - INFO - Firebase initialized successfully
 2025-05-12 17:02:00,873 - INFO - Successfully sent daily meal notification
+2025-07-12 19:55:34,096 - INFO - Firebase initialized successfully
+2025-07-12 19:55:36,389 - ERROR - Error getting meal information: list index out of range
+2025-07-12 19:55:37,201 - INFO - Successfully sent daily meal notification
+2025-07-12 20:00:21,712 - INFO - Firebase initialized successfully
+2025-07-12 20:02:28,691 - INFO - Firebase initialized successfully
+2025-07-12 20:04:24,971 - INFO - Firebase initialized successfully
+2025-07-12 20:07:11,861 - INFO - Firebase initialized successfully
+2025-07-12 20:07:35,832 - INFO - Firebase initialized successfully
+2025-07-12 20:07:38,123 - INFO - No meal planned for Saturday, July 12, 2025
+2025-07-12 20:07:38,952 - INFO - Successfully sent daily meal notification
+2025-07-12 20:08:42,844 - INFO - Firebase initialized successfully
+2025-07-12 20:08:44,730 - INFO - No meal planned for Saturday, July 12, 2025
+2025-07-12 20:08:45,463 - INFO - Successfully sent daily meal notification

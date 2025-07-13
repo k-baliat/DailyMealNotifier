@@ -67,6 +67,21 @@ def get_useless_fact():
     response = requests.get("https://uselessfacts.jsph.pl/random.json?language=en", headers={"Accept": "application/json"})
     return response.json().get("text")
 
+def get_random_dog_fact():
+    """Fetch a random dog fact from Dog API v2. Returns text or fallback message."""
+    url = "https://dogapi.dog/api/v2/facts"
+    try:
+        r = requests.get(url, timeout=5)
+        r.raise_for_status()
+        data = r.json()
+        facts = [item["attributes"]["body"] for item in data.get("data", [])]
+        if facts:
+            return random.choice(facts)
+        else:
+            return "Hmm, no dog facts available right now."
+    except (requests.RequestException, ValueError, KeyError) as e:
+        return f"Error fetching dog fact: {e}"
+
 def get_today_meal():
     """
     Get today's meal information from Firestore
@@ -87,7 +102,9 @@ def get_today_meal():
         meal_plan = meal_plan_ref.get()
         useless_fact = f"Fun Fact 🤔\n{get_useless_fact()}"
         dad_joke = f"Dad Joke 😝\n{get_dad_joke()}" 
+        dog_fact = f"Coco Fact🐾🐶\n{get_random_dog_fact()}\n\n"
         noMealMessage = f"No meal planned for {day_of_week}, {date_str}. But here's a something to brighten your day!\n\n"
+        noMealMessage += dog_fact
         noMealMessage += random.choice([dad_joke, useless_fact])
 
         if not meal_plan.exists :
@@ -122,8 +139,9 @@ def get_today_meal():
 
             else:
                 logging.warning(f"Recipe {recipe_id} not found")
-                
-        message += useless_fact
+
+        message += dog_fact
+        message += useless_fact 
         return message.strip()
     except Exception as e:
         error_msg = f"Error getting meal information: {str(e)}"
